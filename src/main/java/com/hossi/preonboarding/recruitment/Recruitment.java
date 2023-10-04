@@ -22,19 +22,20 @@ public class Recruitment {
     private Integer id;
 
     @Setter
-    @Column(name = "position", nullable = false)
+    @Column(name = "position", nullable = false, length = 50)
     private String position;
 
     @Setter
     @Column(name = "reward")
     private Integer reward;
 
+    @Lob
     @Setter
     @Column(name = "content", nullable = false)
     private String content;
 
     @Setter
-    @Column(name = "tech", nullable = false)
+    @Column(name = "tech", nullable = false, length = 50)
     private String tech;
 
     @CreatedDate
