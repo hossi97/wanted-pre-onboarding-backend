@@ -1,12 +1,8 @@
 package com.hossi.preonboarding.recruitment;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
@@ -15,15 +11,19 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
-public class RecruitmentTest {
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@DisplayName("회사 - 채용정보 등록, 조회, 수정, 삭제")
+public class CompanyRecruitmentTest {
     @Autowired
     RecruitmentRepository recruitmentRepository;
     @Test
+    @Order(1)
     @DisplayName("recruitment 에 대한 테이블 생성")
     public void createTableOfRecruitment() {
     }
 
     @Test
+    @Order(2)
     @Transactional
     @DisplayName("recruitment 생성")
     public void createRecruitment() {
@@ -42,6 +42,7 @@ public class RecruitmentTest {
     }
 
     @Test
+    @Order(3)
     @Transactional
     @DisplayName("recruitment 조회")
     public void selectRecruitment() {
@@ -62,6 +63,7 @@ public class RecruitmentTest {
     }
 
     @Test
+    @Order(4)
     @Transactional
     @DisplayName("recruitment 수정")
     public void updateRecruitment() {
@@ -87,6 +89,7 @@ public class RecruitmentTest {
     }
 
     @Test
+    @Order(5)
     @Transactional
     @DisplayName("recruitment 삭제")
     public void deleteRecruitment() {
@@ -103,7 +106,6 @@ public class RecruitmentTest {
         assertThatExceptionOfType(NoSuchElementException.class).isThrownBy(() -> {
             recruitmentRepository.findById(savedRecruitment.getId()).get();
         });
-
     }
 
 }

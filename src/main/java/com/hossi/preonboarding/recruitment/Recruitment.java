@@ -12,38 +12,35 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Table(name = "recruitment")
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Recruitment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Integer id;
 
     @Setter
-    @Column(name = "position", nullable = false, length = 50)
+    @Column(nullable = false, length = 50)
     private String position;
 
     @Setter
-    @Column(name = "reward")
     private Integer reward;
 
     @Lob
     @Setter
-    @Column(name = "content", nullable = false)
+    @Column(nullable = false)
     private String content;
 
     @Setter
-    @Column(name = "tech", nullable = false, length = 50)
+    @Column(nullable = false, length = 50)
     private String tech;
 
     @CreatedDate
-    @Column(name = "created_date", nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdDate;
 
     @LastModifiedDate
-    @Column(name = "modified_date", nullable = false)
+    @Column(nullable = false)
     private LocalDateTime modifiedDate;
 
     @Builder
