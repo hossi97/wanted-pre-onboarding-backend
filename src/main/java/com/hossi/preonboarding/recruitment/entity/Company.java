@@ -37,13 +37,17 @@ public class Company {
     @Column(nullable = false)
     private LocalDateTime modifiedDate;
 
-//    @OneToMany(mappedBy = "company")
-//    List<Recruitment> list = new ArrayList<>();
+    @OneToMany(mappedBy = "company")
+    List<Recruitment> recruitmentList = new ArrayList<>();
 
     @Builder
     public Company(String name, String nation, String region) {
         this.name = name;
         this.nation = nation;
         this.region = region;
+    }
+
+    public void addRecruitment(Recruitment recruitment) {
+        recruitmentList.add(recruitment);
     }
 }
