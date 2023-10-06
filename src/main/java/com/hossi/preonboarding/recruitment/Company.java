@@ -9,6 +9,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -31,6 +33,9 @@ public class Company {
     @LastModifiedDate
     @Column(nullable = false)
     private LocalDateTime modifiedDate;
+
+    @OneToMany(mappedBy = "company")
+    List<Recruitment> list = new ArrayList<>();
 
     @Builder
     public Company(String name, String region) {

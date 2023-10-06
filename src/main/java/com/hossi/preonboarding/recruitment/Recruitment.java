@@ -43,6 +43,10 @@ public class Recruitment {
     @Column(nullable = false)
     private LocalDateTime modifiedDate;
 
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
+
     @Builder
     public Recruitment(String position, Integer reward, String content, String tech) {
         this.position = position;

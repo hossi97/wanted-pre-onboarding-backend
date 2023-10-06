@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@DisplayName("회사 - 채용정보 등록, 조회, 수정, 삭제")
+@DisplayName("회사 - 채용 공고 등록, 조회, 수정, 삭제")
 public class CompanyRecruitmentTest {
     @Autowired
     RecruitmentRepository recruitmentRepository;
