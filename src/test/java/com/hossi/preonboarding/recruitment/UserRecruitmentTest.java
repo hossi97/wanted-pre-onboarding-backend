@@ -24,7 +24,7 @@ public class UserRecruitmentTest {
     CompanyRepository companyRepository;
 
     @Test
-    @DisplayName("recruitment join on company 목록 조회")
+    @DisplayName("recruitment 목록 조회")
     public void selectRecruitmentList() {
         Company company = Company.builder()
                 .name("원티드")
@@ -62,7 +62,7 @@ public class UserRecruitmentTest {
     }
 
     @Test
-    @DisplayName("recruitment join on company 목록 조회")
+    @DisplayName("recruitment 상세 조회")
     public void selectRecruitmentDetail() {
         Company company = Company.builder()
                 .name("원티드")
