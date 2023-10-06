@@ -1,8 +1,7 @@
-package com.hossi.preonboarding.recruitment;
+package com.hossi.preonboarding.recruitment.service;
 
+import com.hossi.preonboarding.recruitment.repository.RecruitmentRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class RecruitmentService {

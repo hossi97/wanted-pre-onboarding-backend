@@ -1,17 +1,16 @@
-package com.hossi.preonboarding.recruitment;
+package com.hossi.preonboarding.recruitment.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@ToString
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Recruitment {
@@ -48,10 +47,11 @@ public class Recruitment {
     private Company company;
 
     @Builder
-    public Recruitment(String position, Integer reward, String content, String tech) {
+    public Recruitment(String position, Integer reward, String content, String tech, Company company) {
         this.position = position;
         this.reward = reward;
         this.content = content;
         this.tech = tech;
+        this.company = company;
     }
 }
