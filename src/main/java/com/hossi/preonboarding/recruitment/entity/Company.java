@@ -47,7 +47,7 @@ public class Company {
         this.region = region;
     }
 
-    public void addRecruitment(Recruitment recruitment) {
+    public void setRecruitment(Recruitment recruitment) {
         recruitmentList.add(recruitment);
     }
 }

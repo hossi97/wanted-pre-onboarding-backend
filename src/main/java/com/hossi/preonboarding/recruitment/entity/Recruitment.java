@@ -7,6 +7,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -47,8 +48,8 @@ public class Recruitment {
     @JoinColumn(name = "company_id")
     private Company company;
 
-    @OneToMany(mappedBy = "appliment")
-    private List<Appliment> applimentList;
+    @OneToMany(mappedBy = "recruitment")
+    private List<Application> applicationList = new ArrayList<>();
 
     @Builder
     public Recruitment(String position, Integer reward, String content, String tech, Company company) {
@@ -57,5 +58,9 @@ public class Recruitment {
         this.content = content;
         this.tech = tech;
         this.company = company;
+    }
+
+    public void setAppliment(Application application) {
+        applicationList.add(application);
     }
 }

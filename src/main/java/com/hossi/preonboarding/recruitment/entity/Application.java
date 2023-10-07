@@ -2,13 +2,12 @@ package com.hossi.preonboarding.recruitment.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -16,7 +15,7 @@ import java.time.LocalDateTime;
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Appliment {
+public class Application {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -29,11 +28,21 @@ public class Appliment {
     @Column(nullable = false)
     private LocalDateTime modifiedDate;
 
-    @JoinColumn
     @ManyToOne
+    @JoinColumn(name = "recruitment_id")
     private Recruitment recruitment;
 
-    @JoinColumn
     @OneToOne
+    @JoinColumn(name = "member_id")
     private Member member;
+
+    @Builder
+    public Application(Recruitment recruitment, Member member) {
+        this.recruitment = recruitment;
+        this.member = member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
 }

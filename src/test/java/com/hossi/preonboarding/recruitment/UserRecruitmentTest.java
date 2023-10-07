@@ -1,16 +1,20 @@
 package com.hossi.preonboarding.recruitment;
 
+import com.hossi.preonboarding.recruitment.entity.Application;
 import com.hossi.preonboarding.recruitment.entity.Company;
+import com.hossi.preonboarding.recruitment.entity.Member;
+import com.hossi.preonboarding.recruitment.repository.ApplicationRepository;
 import com.hossi.preonboarding.recruitment.repository.CompanyRepository;
 import com.hossi.preonboarding.recruitment.entity.Recruitment;
+import com.hossi.preonboarding.recruitment.repository.MemberRepository;
 import com.hossi.preonboarding.recruitment.repository.RecruitmentRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,8 +26,13 @@ public class UserRecruitmentTest {
     RecruitmentRepository recruitmentRepository;
     @Autowired
     CompanyRepository companyRepository;
+    @Autowired
+    MemberRepository memberRepository;
+    @Autowired
+    ApplicationRepository applicationRepository;
 
     @Test
+    @Transactional
     @DisplayName("recruitment 목록 조회")
     public void selectRecruitmentList() {
         Company company = Company.builder()
@@ -62,6 +71,7 @@ public class UserRecruitmentTest {
     }
 
     @Test
+    @Transactional
     @DisplayName("recruitment 상세 조회")
     public void selectRecruitmentDetail() {
         Company company = Company.builder()
@@ -86,8 +96,8 @@ public class UserRecruitmentTest {
                 .company(company)
                 .build();
 
-        company.addRecruitment(recruitment1);
-        company.addRecruitment(recruitment2);
+        company.setRecruitment(recruitment1);
+        company.setRecruitment(recruitment2);
 
         Recruitment savedRecruitment1 = recruitmentRepository.save(recruitment1);
         Recruitment savedRecruitment2 = recruitmentRepository.save(recruitment2);
@@ -109,12 +119,50 @@ public class UserRecruitmentTest {
     }
 
     @Test
-    @DisplayName("recruitment 지원하기")
+    @Transactional
+    @DisplayName("application 조회")
     public void applyRecruitment() {
-        //        {
-        //            "채용공고_id": 채용공고_id,
-        //                "사용자_id": 사용자_id
-        //        }
+        Company company = Company.builder()
+                .name("원티드")
+                .nation("한국")
+                .region("서울")
+                .build();
+
+        Recruitment recruitment = Recruitment.builder()
+                .content("채용내용은 다음과 같습니다.")
+                .reward(100_000)
+                .tech("Java")
+                .position("백엔드 개발자")
+                .company(company)
+                .build();
+
+        company.setRecruitment(recruitment);
+
+        Member member = Member.builder()
+                .name("홍길동")
+                .email("asd1234@domain.com")
+                .phoneNum("01000000000")
+                .build();
+
+        Company savedCompany = companyRepository.save(company);
+        Recruitment savedRecruitment = recruitmentRepository.save(recruitment);
+        Member savedMember = memberRepository.save(member);
+
+        Application application = Application.builder()
+                .member(savedMember)
+                .recruitment(recruitment)
+                .build();
+
+        savedMember.setApplication(application);
+        savedRecruitment.setAppliment(application);
+
+        Application savedApplication = applicationRepository.save(application);
+        Recruitment updatedRecruitment = recruitmentRepository.save(savedRecruitment);
+        Member updatedMember = memberRepository.save(savedMember);
+
+        assertThat(updatedRecruitment).isEqualTo(savedApplication.getRecruitment());
+        assertThat(updatedMember).isEqualTo(savedApplication.getMember());
+
     }
 
 }
