@@ -7,6 +7,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -45,6 +46,9 @@ public class Recruitment {
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
+
+    @OneToMany(mappedBy = "appliment")
+    private List<Appliment> applimentList;
 
     @Builder
     public Recruitment(String position, Integer reward, String content, String tech, Company company) {

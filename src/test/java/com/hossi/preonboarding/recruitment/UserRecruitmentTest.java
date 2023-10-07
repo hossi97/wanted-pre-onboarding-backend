@@ -108,4 +108,13 @@ public class UserRecruitmentTest {
         assertThat(recruitmentList.get(1)).isEqualTo(foundedRecruitment2);
     }
 
+    @Test
+    @DisplayName("recruitment 지원하기")
+    public void applyRecruitment() {
+        //        {
+        //            "채용공고_id": 채용공고_id,
+        //                "사용자_id": 사용자_id
+        //        }
+    }
+
 }
