@@ -12,7 +12,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@ToString
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Company {

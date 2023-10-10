@@ -3,9 +3,9 @@ package com.hossi.preonboarding.recruitment;
 import com.hossi.preonboarding.recruitment.entity.Application;
 import com.hossi.preonboarding.recruitment.entity.Company;
 import com.hossi.preonboarding.recruitment.entity.Member;
+import com.hossi.preonboarding.recruitment.entity.Recruitment;
 import com.hossi.preonboarding.recruitment.repository.ApplicationRepository;
 import com.hossi.preonboarding.recruitment.repository.CompanyRepository;
-import com.hossi.preonboarding.recruitment.entity.Recruitment;
 import com.hossi.preonboarding.recruitment.repository.MemberRepository;
 import com.hossi.preonboarding.recruitment.repository.RecruitmentRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -71,7 +71,6 @@ public class UserRecruitmentTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("recruitment 상세 조회")
     public void selectRecruitmentDetail() {
         Company company = Company.builder()
@@ -165,4 +164,53 @@ public class UserRecruitmentTest {
 
     }
 
+    @Test
+    @Transactional
+    @DisplayName("문자열 검색을 통한 company와 recruitment 조회")
+    public void selectCmpAndRcrByString() {
+        Company company = Company.builder()
+                .name("원티드")
+                .nation("한국")
+                .region("서울")
+                .build();
+
+        Recruitment recruitment = Recruitment.builder()
+                .content("채용내용은 다음과 같습니다.")
+                .reward(100_000)
+                .tech("Java")
+                .position("백엔드 개발자")
+                .company(company)
+                .build();
+
+        Company savedCompany = companyRepository.save(company);
+        Recruitment savedRecruitment = recruitmentRepository.save(recruitment);
+
+        List<Recruitment> resultList = recruitmentRepository.findAllByKeyword("한국");
+        assertThat(resultList.get(0)).isEqualTo(savedRecruitment);
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("숫자 검색을 통한 company와 recruitment 조회")
+    public void selectCmpAndRcrByNumber() {
+        Company company = Company.builder()
+                .name("원티드")
+                .nation("한국")
+                .region("서울")
+                .build();
+
+        Recruitment recruitment = Recruitment.builder()
+                .content("채용내용은 다음과 같습니다.")
+                .reward(100_000)
+                .tech("Java")
+                .position("백엔드 개발자")
+                .company(company)
+                .build();
+
+        Company savedCompany = companyRepository.save(company);
+        Recruitment savedRecruitment = recruitmentRepository.save(recruitment);
+
+        List<Recruitment> resultList = recruitmentRepository.findAllByReward(100000);
+        assertThat(resultList.get(0)).isEqualTo(savedRecruitment);
+    }
 }
